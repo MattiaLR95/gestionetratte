@@ -21,24 +21,33 @@ public class Airbus {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	
+
 	@Column(name = "codice")
 	private String codice;
-	
+
 	@Column(name = "descrizione")
 	private String descrizione;
-	
+
 	@Column(name = "datainizioservizio")
 	private LocalDate dataInizioServizio;
-	
+
 	@Column(name = "numeropasseggeri")
 	private Integer numeroPasseggeri;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "airbus")
 	private Set<Tratta> tratte = new HashSet<>(0);
 
 	public Airbus() {
 		super();
+	}
+
+	public Airbus(Long id, String codice, String descrizione, LocalDate dataInizioServizio, Integer numeroPasseggeri) {
+		super();
+		this.id = id;
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.dataInizioServizio = dataInizioServizio;
+		this.numeroPasseggeri = numeroPasseggeri;
 	}
 
 	public Airbus(Long id, String codice, String descrizione, LocalDate dataInizioServizio, Integer numeroPasseggeri,
