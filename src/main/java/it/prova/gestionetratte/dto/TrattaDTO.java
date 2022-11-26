@@ -14,8 +14,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import it.prova.gestionetratte.model.Stato;
 import it.prova.gestionetratte.model.Tratta;
-import it.prova.raccoltafilmspringrest.dto.FilmDTO;
-import it.prova.raccoltafilmspringrest.model.Film;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TrattaDTO {

@@ -2,7 +2,9 @@ package it.prova.gestionetratte.dto;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -106,7 +108,7 @@ public class AirbusDTO {
 	public void setTratte(Set<TrattaDTO> tratte) {
 		this.tratte = tratte;
 	}
-	
+
 	public Airbus buildAirbusModel() {
 		return new Airbus(this.id, this.codice, this.descrizione, this.dataInizioServizio, this.numeroPasseggeri);
 	}
@@ -114,9 +116,19 @@ public class AirbusDTO {
 	public static AirbusDTO buildAirbusDTOFromModel(Airbus airbusModel, boolean includeTratte) {
 		AirbusDTO result = new AirbusDTO(airbusModel.getId(), airbusModel.getCodice(), airbusModel.getDescrizione(),
 				airbusModel.getDataInizioServizio(), airbusModel.getNumeroPasseggeri());
-		if(includeTratte)
-			result.setTratte(TrattaDTO.createTrattaDTOSetFrinNidekSet(airbusModel.getTratte(),false));
+		if (includeTratte)
+			result.setTratte(TrattaDTO.createTrattaDTOSetFromModelSet(airbusModel.getTratte(), false));
 		return result;
+	}
+
+	public static List<AirbusDTO> createRegistaDTOListFromModelList(List<Airbus> modelListInput,
+			boolean includeTratte) {
+		return modelListInput.stream().map(airbusEntity -> {
+			AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(airbusEntity, includeTratte);
+			if (includeTratte)
+				result.setTratte(TrattaDTO.createTrattaDTOSetFromModelSet(airbusEntity.getTratte(), false));
+			return result;
+		}).collect(Collectors.toList());
 	}
 
 }
