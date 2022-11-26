@@ -15,7 +15,7 @@ import it.prova.gestionetratte.web.api.exception.AirbusNotFoundException;
 public class AirbusServiceImpl implements AirbusService {
 
 	@Autowired
-	AirbusRepository repository;
+	private AirbusRepository repository;
 
 	@Override
 	public List<Airbus> listAllElements() {
@@ -50,6 +50,7 @@ public class AirbusServiceImpl implements AirbusService {
 	}
 
 	@Override
+	@Transactional
 	public void rimuovi(Long idToRemove) {
 		repository.findById(idToRemove)
 				.orElseThrow(() -> new AirbusNotFoundException("Airbus not found con id: " + idToRemove));

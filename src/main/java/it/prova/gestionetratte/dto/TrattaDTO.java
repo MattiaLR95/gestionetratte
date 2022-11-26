@@ -38,8 +38,8 @@ public class TrattaDTO {
 	@NotNull(message = "{stato.notnull}")
 	private Stato stato;
 
-	@JsonIgnoreProperties(value = { "tratta" })
-	@NotNull(message = "{tratta.notnull}")
+	@JsonIgnoreProperties(value = { "tratte" })
+	@NotNull(message = "{airbus.notnull}")
 	private AirbusDTO airbus;
 
 	public TrattaDTO() {
