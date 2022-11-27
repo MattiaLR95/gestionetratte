@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.prova.gestionetratte.dto.TrattaDTO;
+import it.prova.gestionetratte.model.Stato;
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.service.TrattaService;
 import it.prova.gestionetratte.web.api.exception.IdNotNullForInsertException;
+import it.prova.gestionetratte.web.api.exception.TrattaNotEliminatedException;
 import it.prova.gestionetratte.web.api.exception.TrattaNotFoundException;
 
 @RestController
@@ -69,6 +71,9 @@ public class TrattaController {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable(required = true) Long id) {
+		if (trattaService.caricaSingoloElemento(id).getStato() != Stato.ANNULLATA)
+			throw new TrattaNotEliminatedException(
+					"La Tratta non è stata annullata! Impossibile completare l'operazione");
 		trattaService.rimuovi(id);
 	}
 }

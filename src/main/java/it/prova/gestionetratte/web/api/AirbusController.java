@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.prova.gestionetratte.dto.AirbusDTO;
 import it.prova.gestionetratte.model.Airbus;
 import it.prova.gestionetratte.service.AirbusService;
+import it.prova.gestionetratte.web.api.exception.AirbusNotEliminatedException;
 import it.prova.gestionetratte.web.api.exception.AirbusNotFoundException;
 import it.prova.gestionetratte.web.api.exception.IdNotNullForInsertException;
 
@@ -69,6 +70,9 @@ public class AirbusController {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable(required = true) Long id) {
+		if (airbusService.caricaSingoloElemento(id).getTratte().size() != 0)
+			throw new AirbusNotEliminatedException(
+					"L'airbus contiene delle tratte! Impossibile completare l'operazione");
 		airbusService.rimuovi(id);
 	}
 
