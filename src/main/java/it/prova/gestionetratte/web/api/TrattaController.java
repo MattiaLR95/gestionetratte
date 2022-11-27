@@ -76,4 +76,9 @@ public class TrattaController {
 					"La Tratta non è stata annullata! Impossibile completare l'operazione");
 		trattaService.rimuovi(id);
 	}
+	
+	@GetMapping("/concludiTratte")
+	public void concludiTratte() {
+		trattaService.concludiTratte();
+	}
 }

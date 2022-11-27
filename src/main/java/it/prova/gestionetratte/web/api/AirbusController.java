@@ -32,7 +32,7 @@ public class AirbusController {
 
 	@GetMapping
 	public List<AirbusDTO> getAll() {
-		return AirbusDTO.createRegistaDTOListFromModelList(airbusService.listAllElementsEager(), true);
+		return AirbusDTO.createRegistaDTOListFromModelList(airbusService.listAllElementsEager(), true, false);
 	}
 
 	@GetMapping("/{id}")
@@ -42,7 +42,7 @@ public class AirbusController {
 		if (airbus == null)
 			throw new AirbusNotFoundException("Airbus not found con id: " + id);
 
-		return AirbusDTO.buildAirbusDTOFromModel(airbus, true);
+		return AirbusDTO.buildAirbusDTOFromModel(airbus, true, false);
 	}
 
 	@PostMapping
@@ -52,7 +52,7 @@ public class AirbusController {
 			throw new IdNotNullForInsertException("Non è ammesso fornire un id per la creazione di un nuovo Airbus");
 
 		Airbus airbusInserito = airbusService.inserisciNuovo(airbusInput.buildAirbusModel());
-		return AirbusDTO.buildAirbusDTOFromModel(airbusInserito, false);
+		return AirbusDTO.buildAirbusDTOFromModel(airbusInserito, false, false);
 	}
 
 	@PutMapping
@@ -64,7 +64,7 @@ public class AirbusController {
 
 		airbusInput.setId(id);
 		Airbus airbusAggiornato = airbusService.aggiorna(airbusInput.buildAirbusModel());
-		return AirbusDTO.buildAirbusDTOFromModel(airbusAggiornato, false);
+		return AirbusDTO.buildAirbusDTOFromModel(airbusAggiornato, false, false);
 	}
 
 	@DeleteMapping("/{id}")
@@ -74,6 +74,11 @@ public class AirbusController {
 			throw new AirbusNotEliminatedException(
 					"L'airbus contiene delle tratte! Impossibile completare l'operazione");
 		airbusService.rimuovi(id);
+	}
+	
+	@GetMapping("/listaAirbusEvidenziandoSovrapposizioni")
+	public List<AirbusDTO> getListaAirbusEvidenziandoSovrapposizioni() {
+		return airbusService.findListaAirbusEvidenziandoSovrapposizioni();
 	}
 
 }
