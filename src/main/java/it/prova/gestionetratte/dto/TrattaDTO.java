@@ -160,11 +160,11 @@ public class TrattaDTO {
 				trattaModel.getStato());
 
 		if (includeAirbus)
-			result.setAirbus(AirbusDTO.buildAirbusDTOFromModel(trattaModel.getAirbus(), false));
+			result.setAirbus(AirbusDTO.buildAirbusDTOFromModel(trattaModel.getAirbus(), false, false));
 
 		return result;
 	}
-	
+
 	public static List<TrattaDTO> createTrattaDTOListFromModelList(List<Tratta> modelListInput, boolean includeAirbus) {
 		return modelListInput.stream().map(trattaEntity -> {
 			return TrattaDTO.buildTrattaDTOFromModel(trattaEntity, includeAirbus);
